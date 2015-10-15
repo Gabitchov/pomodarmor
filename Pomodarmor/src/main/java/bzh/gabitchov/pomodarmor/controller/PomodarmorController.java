@@ -14,6 +14,7 @@ import bzh.gabitchov.pomodarmor.view.IView;
 import bzh.gabitchov.pomodarmor.view.PomodarmorView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 /**
  * @author g.pascual
@@ -42,8 +43,6 @@ public class PomodarmorController extends Pomodarmor implements IPomodarmorContr
 	private void createView() {
 		FXMLLoader loader = FXMLUtils.loadView(PomodarmorView.class, "Pomodarmor.fxml");
 		view = loader.<IPomodarmorView> getController();
-
-		setContent(view.getScene());
 		view.setController(this);
 	}
 
@@ -52,6 +51,23 @@ public class PomodarmorController extends Pomodarmor implements IPomodarmorContr
 		return view;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
+	@Override
+	public void start(final Stage primaryStage) throws Exception {
+		super.start(primaryStage);
+		primaryStage.setScene(view.getScene());
+		primaryStage.show();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.controller.IPomodarmorController#run()
+	 */
 	@Override
 	public void run() {
 		// Only launch if the application is a Java FX application
@@ -59,4 +75,14 @@ public class PomodarmorController extends Pomodarmor implements IPomodarmorContr
 			Application.launch(Application.class.cast(this).getClass(), new String[0]);
 		}
 	}
+
+	@Override
+	public void stop() throws Exception {
+		Object controller = children.get("Timer");
+		if (controller instanceof IChronoController) {
+			((IChronoController) controller).stop();
+		}
+		super.stop();
+	}
+
 }

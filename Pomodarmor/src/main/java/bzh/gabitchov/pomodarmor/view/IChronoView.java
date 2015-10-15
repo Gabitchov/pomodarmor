@@ -1,7 +1,26 @@
 package bzh.gabitchov.pomodarmor.view;
 
-public interface IChronoView extends IView {
+import java.util.Observer;
 
-	void changeStopButtonLabel(final String string);
+import bzh.gabitchov.pomodarmor.view.ChronoView.ChronoButton;
+
+public interface IChronoView extends IView, Observer {
+
+	/**
+	 * Update button.
+	 *
+	 * @param button
+	 *            the button
+	 * @param label
+	 *            the label
+	 * @param enable
+	 *            the enable
+	 */
+	void updateButton(final ChronoButton button, final String label, final boolean enable);
+
+	/**
+	 * Reset display.
+	 */
+	void resetDisplay();
 
 }

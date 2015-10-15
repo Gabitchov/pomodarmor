@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package bzh.gabitchov.pomodarmor.application;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -13,10 +12,8 @@ import javafx.stage.Stage;
  */
 public class Pomodarmor extends Application implements IPomodarmor {
 
-	private Scene applicationScene;
-
 	/**
-	 * 
+	 *
 	 */
 	public Pomodarmor() {
 		super();
@@ -24,14 +21,7 @@ public class Pomodarmor extends Application implements IPomodarmor {
 
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
-		primaryStage.setScene(applicationScene);
 		primaryStage.setTitle("Pomod'Armor");
-		primaryStage.show();
-	}
-
-	@Override
-	public void setContent(final Scene scene) {
-		applicationScene = scene;
 	}
 
 }

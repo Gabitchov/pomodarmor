@@ -1,5 +1,7 @@
 package bzh.gabitchov.pomodarmor.controller;
 
+import java.util.Observer;
+
 import bzh.gabitchov.pomodarmor.application.Chrono;
 import bzh.gabitchov.pomodarmor.utils.FXMLUtils;
 import bzh.gabitchov.pomodarmor.view.ChronoView;
@@ -9,9 +11,21 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * The Class ChronoController.
+ * Controller for Chrono.
  */
 public class ChronoController extends Chrono implements IChronoController {
+
+	/** The Constant RESTART_BUTTON_LABEL. */
+	private static final String RESTART_BUTTON_LABEL = "Restart";
+
+	/** The Constant PAUSE_BUTTON_LABEL. */
+	private static final String PAUSE_BUTTON_LABEL = "Pause";
+
+	/** The Constant STOP_BUTTON_LABEL. */
+	private static final String STOP_BUTTON_LABEL = "Stop";
+
+	/** The Constant START_BUTTON_LABEL. */
+	private static final String START_BUTTON_LABEL = "Start";
 
 	/** The parent. */
 	private final IPomodarmorController parent;
@@ -55,16 +69,12 @@ public class ChronoController extends Chrono implements IChronoController {
 	@Override
 	public void start() {
 		super.start();
-	}
+		if (view instanceof Observer) {
+			getTimer().addObserver(view);
+		}
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, false);
+		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL, true);
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see bzh.gabitchov.pomodarmor.application.Chrono#isStopped()
-	 */
-	@Override
-	public boolean isStopped() {
-		return super.isStopped();
 	}
 
 	/*
@@ -75,7 +85,16 @@ public class ChronoController extends Chrono implements IChronoController {
 	@Override
 	public void restart() {
 		super.restart();
-		view.changeStopButtonLabel("Stop");
+		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL, true);
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, false);
+
+	}
+
+	@Override
+	public void pause() {
+		super.pause();
+		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL, true);
+		view.updateButton(ChronoView.ChronoButton.START, RESTART_BUTTON_LABEL, true);
 
 	}
 
@@ -86,8 +105,17 @@ public class ChronoController extends Chrono implements IChronoController {
 	 */
 	@Override
 	public void stop() {
-		super.stop();
-		view.changeStopButtonLabel("Restart");
+		PomodarmorTimer timer = getTimer();
+		if (null != timer) {
+			if (view instanceof Observer) {
+				timer.deleteObserver(view);
+			}
+			super.stop();
+		}
+
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, true);
+		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL, false);
+		view.resetDisplay();
 
 	}
 

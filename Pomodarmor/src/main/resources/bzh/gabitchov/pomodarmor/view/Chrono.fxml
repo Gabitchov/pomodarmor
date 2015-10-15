@@ -9,7 +9,7 @@
 <HBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.gabitchov.pomodarmor.view.ChronoView">
 	<children>
 		<StackPane>
-			<TextField fx:id="chrono" editable="false" />
+			<TextField fx:id="chrono" editable="false" text="00:00" focusTraversable="false" />
 		</StackPane>
 		<Button fx:id="startButton" text="Start" />
 		<Button fx:id="stopButton" text="Stop" />
