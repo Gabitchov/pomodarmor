@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.Group?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.gabitchov.pomodarmor.view.DashboardView">
+	<children>
+		<HBox alignment="BOTTOM_RIGHT">
+			<children>
+				<Button fx:id="addTask" text="Add" />
+				<Button fx:id="removeTask" text="Remove" />
+			</children>
+		</HBox>
+		<TableView fx:id="tasksView" editable="true"/>
+	</children>
+</VBox>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.layout.VBox?>
+
+<Scene xmlns:fx="http://javafx.com/fxml/1" fx:id="scene"
+	fx:controller="bzh.gabitchov.pomodarmor.view.PomodarmorView" fill="BLACK" height="250" width="300">
+	<VBox fx:id="pane" >
+		<MenuBar >
+			<menus>
+				<Menu fx:id="fileMenu" text="File" />
+			</menus>
+		</MenuBar>
+	</VBox>
+</Scene>
+

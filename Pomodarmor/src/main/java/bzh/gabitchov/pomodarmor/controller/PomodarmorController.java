@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package bzh.gabitchov.pomodarmor.controller;
 
@@ -8,10 +8,12 @@ import java.util.Map;
 
 import bzh.gabitchov.pomodarmor.application.IPomodarmor;
 import bzh.gabitchov.pomodarmor.application.Pomodarmor;
+import bzh.gabitchov.pomodarmor.utils.FXMLUtils;
 import bzh.gabitchov.pomodarmor.view.IPomodarmorView;
 import bzh.gabitchov.pomodarmor.view.IView;
 import bzh.gabitchov.pomodarmor.view.PomodarmorView;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 
 /**
  * @author g.pascual
@@ -19,9 +21,9 @@ import javafx.application.Application;
  */
 public class PomodarmorController extends Pomodarmor implements IPomodarmorController {
 
-	private IPomodarmorView pomodarmorView = null;
+	private IPomodarmorView view = null;
 
-	private IPomodarmor application = null;
+	private final IPomodarmor application = null;
 
 	private final Map<String, Object> children = new HashMap<String, Object>();
 
@@ -34,16 +36,20 @@ public class PomodarmorController extends Pomodarmor implements IPomodarmorContr
 	private void createChildren() {
 
 		children.put("Timer", new ChronoController(this));
+		children.put("Dashboard", new DashboardController(this));
 	}
 
 	private void createView() {
-		pomodarmorView = new PomodarmorView();
-		setContent(pomodarmorView.getScene());
+		FXMLLoader loader = FXMLUtils.loadView(PomodarmorView.class, "Pomodarmor.fxml");
+		view = loader.<IPomodarmorView> getController();
+
+		setContent(view.getScene());
+		view.setController(this);
 	}
 
 	@Override
 	public IView getView() {
-		return pomodarmorView;
+		return view;
 	}
 
 	@Override

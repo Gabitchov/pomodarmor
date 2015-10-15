@@ -1,63 +1,77 @@
 package bzh.gabitchov.pomodarmor.controller;
 
-import java.io.IOException;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import bzh.gabitchov.pomodarmor.application.Chrono;
+import bzh.gabitchov.pomodarmor.utils.FXMLUtils;
 import bzh.gabitchov.pomodarmor.view.ChronoView;
 import bzh.gabitchov.pomodarmor.view.IChronoView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+/**
+ * The Class ChronoController.
+ */
 public class ChronoController extends Chrono implements IChronoController {
-	private final Logger log = LogManager.getLogger(ChronoController.class);
 
+	/** The parent. */
 	private final IPomodarmorController parent;
 
+	/** The view. */
 	private IChronoView view;
 
+	/**
+	 * Instantiates a new chrono controller.
+	 *
+	 * @param pomodarmorController
+	 *            the pomodarmor controller
+	 */
 	public ChronoController(final IPomodarmorController pomodarmorController) {
 		parent = pomodarmorController;
 		createView();
 
 	}
 
+	/**
+	 * Creates the view.
+	 */
 	private void createView() {
 
-		FXMLLoader loader = new FXMLLoader(ChronoView.class.getResource("Chrono.fxml"));
-		Node node = null;
-		try {
-			node = loader.<Node> load();
-		} catch (IOException e) {
-			log.error(e);
-		}
+		FXMLLoader loader = FXMLUtils.loadView(ChronoView.class, "Chrono.fxml");
+		Node node = loader.<Node> getRoot();
 
 		Pane parentNode = parent.getView().getPane();
 		parentNode.getChildren().add(node);
 
-		Object controller = loader.getController();
-
-		if (controller instanceof IChronoView) {
-			view = (IChronoView) controller;
-			((IChronoView) controller).setController(this);
-
-		}
+		view = loader.<IChronoView> getController();
+		view.setController(this);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.application.Chrono#start()
+	 */
 	@Override
 	public void start() {
-
+		super.start();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.application.Chrono#isStopped()
+	 */
 	@Override
 	public boolean isStopped() {
 		return super.isStopped();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.application.Chrono#restart()
+	 */
 	@Override
 	public void restart() {
 		super.restart();
@@ -65,6 +79,11 @@ public class ChronoController extends Chrono implements IChronoController {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.application.Chrono#stop()
+	 */
 	@Override
 	public void stop() {
 		super.stop();
