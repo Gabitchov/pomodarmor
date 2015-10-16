@@ -13,11 +13,11 @@
 	<children>
 		<HBox alignment="BOTTOM_RIGHT">
 			<children>
-				<Button fx:id="addTask" text="Add" />
-				<Button fx:id="removeTask" text="Remove" />
+				<Button fx:id="addTask" text="Add" id="dark-blue"/>
+				<Button fx:id="removeTask" text="Remove"  id="dark-blue"/>
 			</children>
 		</HBox>
-		<TableView fx:id="tasksView" editable="true"/>
+		<TableView fx:id="tasksView" editable="true" id="dark-blue"/>
 	</children>
 </VBox>
 

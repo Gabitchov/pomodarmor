@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.VBox?>
 
 <Scene xmlns:fx="http://javafx.com/fxml/1" fx:id="scene"
-	fx:controller="bzh.gabitchov.pomodarmor.view.PomodarmorView" fill="BLACK" height="250" width="300">
-	<VBox fx:id="pane" >
-		<MenuBar >
+	fx:controller="bzh.gabitchov.pomodarmor.view.PomodarmorView"  height="250" width="300" >
+	<VBox fx:id="pane"  id="dark-blue" >
+		<MenuBar id="dark-blue" >
 			<menus>
-				<Menu fx:id="fileMenu" text="File" />
+				<Menu fx:id="fileMenu" text="File" id="dark-blue" />
 			</menus>
 		</MenuBar>
 	</VBox>

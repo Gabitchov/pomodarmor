@@ -9,12 +9,14 @@ import java.util.ResourceBundle;
 
 import bzh.gabitchov.pomodarmor.application.Chrono.TimerChange;
 import bzh.gabitchov.pomodarmor.controller.IChronoController;
+import bzh.gabitchov.pomodarmor.utils.ImageRegistry;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 // TODO: Auto-generated Javadoc
@@ -59,7 +61,7 @@ public class ChronoView implements Initializable, IChronoView {
 	 */
 
 	/**
-	 * Initialize.
+	 * Initialise.
 	 *
 	 * @param location
 	 *            the location
@@ -68,6 +70,10 @@ public class ChronoView implements Initializable, IChronoView {
 	 */
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
+
+		// Initialise start button
+		ImageRegistry instance = ImageRegistry.getInstance();
+		startButton.setGraphic(instance.getImage(ImageRegistry.START_ICON_KEY));
 		startButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
@@ -80,6 +86,9 @@ public class ChronoView implements Initializable, IChronoView {
 				}
 			}
 		});
+
+		// Initialise stop button
+		stopButton.setGraphic(instance.getImage(ImageRegistry.STOP_ICON_KEY));
 		stopButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 
 			@Override
@@ -140,15 +149,18 @@ public class ChronoView implements Initializable, IChronoView {
 	 *            the enable
 	 */
 	@Override
-	public void updateButton(final ChronoButton button, final String label, final boolean enable) {
+	public void updateButton(final ChronoButton button, final String label, final ImageView icon,
+			final boolean enable) {
 		switch (button) {
 		case START:
 			startButton.setText(label);
 			startButton.setDisable(!enable);
+			startButton.setGraphic(icon);
 			break;
 		case STOP:
 			stopButton.setText(label);
 			stopButton.setDisable(!enable);
+			stopButton.setGraphic(icon);
 			break;
 		default:
 			break;

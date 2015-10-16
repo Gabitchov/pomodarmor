@@ -14,10 +14,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
 /**
- * @author g.pascual
+ * The Class FXMLUtils.
  *
+ * @author g.pascual
  */
 public class FXMLUtils {
+
+	/** The Constant FXML_RESOURCES_PATH. */
+	private static final String FXML_RESOURCES_PATH = "fxml/";
+
+	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger(FXMLUtils.class);
 
 	/**
@@ -30,7 +36,7 @@ public class FXMLUtils {
 	 * @return the FXML loader
 	 */
 	public static FXMLLoader loadView(final Class<? extends IView> controllerClass, final String fileName) {
-		URL location = controllerClass.getResource(fileName);
+		URL location = controllerClass.getClassLoader().getResource(FXML_RESOURCES_PATH + fileName);
 		FXMLLoader loader = new FXMLLoader(location);
 		try {
 			loader.<Node> load();

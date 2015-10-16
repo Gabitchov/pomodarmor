@@ -34,7 +34,6 @@ public class PomodarmorView implements Initializable, IPomodarmorView {
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
-
 	}
 
 	/*

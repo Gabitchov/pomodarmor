@@ -4,6 +4,7 @@ import java.util.Observer;
 
 import bzh.gabitchov.pomodarmor.application.Chrono;
 import bzh.gabitchov.pomodarmor.utils.FXMLUtils;
+import bzh.gabitchov.pomodarmor.utils.ImageRegistry;
 import bzh.gabitchov.pomodarmor.view.ChronoView;
 import bzh.gabitchov.pomodarmor.view.IChronoView;
 import javafx.fxml.FXMLLoader;
@@ -72,8 +73,11 @@ public class ChronoController extends Chrono implements IChronoController {
 		if (view instanceof Observer) {
 			getTimer().addObserver(view);
 		}
-		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, false);
-		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL, true);
+		ImageRegistry imageRegistry = ImageRegistry.getInstance();
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.START_ICON_KEY), false);
+		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.PAUSE_ICON_KEY), true);
 
 	}
 
@@ -85,16 +89,22 @@ public class ChronoController extends Chrono implements IChronoController {
 	@Override
 	public void restart() {
 		super.restart();
-		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL, true);
-		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, false);
+		ImageRegistry imageRegistry = ImageRegistry.getInstance();
+		view.updateButton(ChronoView.ChronoButton.STOP, PAUSE_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.PAUSE_ICON_KEY), true);
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.START_ICON_KEY), false);
 
 	}
 
 	@Override
 	public void pause() {
 		super.pause();
-		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL, true);
-		view.updateButton(ChronoView.ChronoButton.START, RESTART_BUTTON_LABEL, true);
+		ImageRegistry imageRegistry = ImageRegistry.getInstance();
+		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.STOP_ICON_KEY), true);
+		view.updateButton(ChronoView.ChronoButton.START, RESTART_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.RESTART_ICON_KEY), true);
 
 	}
 
@@ -113,8 +123,11 @@ public class ChronoController extends Chrono implements IChronoController {
 			super.stop();
 		}
 
-		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL, true);
-		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL, false);
+		ImageRegistry imageRegistry = ImageRegistry.getInstance();
+		view.updateButton(ChronoView.ChronoButton.START, START_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.START_ICON_KEY), true);
+		view.updateButton(ChronoView.ChronoButton.STOP, STOP_BUTTON_LABEL,
+				imageRegistry.getImage(ImageRegistry.STOP_ICON_KEY), false);
 		view.resetDisplay();
 
 	}

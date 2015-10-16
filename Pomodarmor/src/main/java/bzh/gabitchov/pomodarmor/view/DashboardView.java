@@ -10,6 +10,7 @@ import bzh.gabitchov.pomodarmor.application.ITask;
 import bzh.gabitchov.pomodarmor.controller.IDashboardController;
 import bzh.gabitchov.pomodarmor.controller.ITaskController;
 import bzh.gabitchov.pomodarmor.controller.TaskController;
+import bzh.gabitchov.pomodarmor.utils.ImageRegistry;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -62,6 +63,8 @@ public class DashboardView implements Initializable, IDashboardView {
 	 */
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
+		ImageRegistry imageRegistry = ImageRegistry.getInstance();
+		addTask.setGraphic(imageRegistry.getImage(ImageRegistry.ADD_TASK_ICON_KEY));
 		addTask.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
@@ -70,6 +73,7 @@ public class DashboardView implements Initializable, IDashboardView {
 			}
 		});
 
+		removeTask.setGraphic(imageRegistry.getImage(ImageRegistry.REMOVE_TASK_ICON_KEY));
 		removeTask.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
@@ -79,11 +83,13 @@ public class DashboardView implements Initializable, IDashboardView {
 		});
 
 		TableColumn<ITask, String> labelColumn = new TableColumn<ITask, String>("Label");
+		labelColumn.setId("dark-blue");
 		labelColumn.setCellValueFactory(new PropertyValueFactory<ITask, String>("label"));
 		labelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		TableColumn<ITask, Boolean> closedColumn = new TableColumn<ITask, Boolean>("Closed");
 		PropertyValueFactory<ITask, Boolean> value = new PropertyValueFactory<ITask, Boolean>("closed");
+		closedColumn.setId("dark-blue");
 		closedColumn.setCellValueFactory(value);
 		closedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(closedColumn));
 

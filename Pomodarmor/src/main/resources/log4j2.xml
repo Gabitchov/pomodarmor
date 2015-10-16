@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="Error" strict="true" name="XMLConfig"
+	packages="bzh.gabitchov.pomodarmor">
+	<Properties>
+		<Property name="debugfile">log/Pomodarmor_Debug.log</Property>
+		<Property name="tracefile">log/Pomodarmor_Trace.log</Property>
+		<Property name="supportfile">log/Pomodarmor_Log.log</Property>
+	</Properties>
+
+	<Appenders>
+
+		<Appender type="File" name="Debug" fileName="${debugfile}">
+			<Layout type="PatternLayout"
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Appender>
+
+		<Appender type="File" name="Trace" fileName="${tracefile}">
+				<Layout type="PatternLayout"
+					pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Appender>
+
+		<Appender name="LogError" type="File" fileName="${supportfile}">
+			<Layout type="PatternLayout"
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Appender>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="PomodArmor Debug" level="debug">
+			<AppenderRef ref="Debug" />
+		</Logger>
+
+		<Logger name="PomodArmor Error" level="error">
+			<AppenderRef ref="LogError" />
+		</Logger>
+
+		<Root level="Error">
+			<AppenderRef ref="Trace" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>
