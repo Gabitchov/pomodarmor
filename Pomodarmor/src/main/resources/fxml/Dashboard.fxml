@@ -7,17 +7,31 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Tooltip?>
 
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.gabitchov.pomodarmor.view.DashboardView">
 	<children>
 		<HBox alignment="BOTTOM_RIGHT">
 			<children>
-				<Button fx:id="addTask" text="Add" id="dark-blue"/>
-				<Button fx:id="removeTask" text="Remove"  id="dark-blue"/>
+				<Button fx:id="addTask">
+					<tooltip>
+						<Tooltip text="Add a task to Dashboard" />
+					</tooltip>
+				</Button>
+				<Button fx:id="removeTask">
+					<tooltip>
+						<Tooltip text="Remove selected task" />
+					</tooltip>
+				</Button>
+				<Button fx:id="editTask" >
+				<tooltip>
+					<Tooltip text="Edit selected task" />
+				</tooltip>
+				</Button>
 			</children>
 		</HBox>
-		<TableView fx:id="tasksView" editable="true" id="dark-blue"/>
+		<TableView fx:id="tasksView" editable="true" />
 	</children>
 </VBox>
 

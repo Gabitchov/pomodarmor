@@ -3,10 +3,14 @@ package bzh.gabitchov.pomodarmor.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import bzh.gabitchov.pomodarmor.controller.IPomodarmorController;
+import bzh.gabitchov.pomodarmor.utils.ImageRegistry;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 
 /**
@@ -18,12 +22,16 @@ public class PomodarmorView implements Initializable, IPomodarmorView {
 	@FXML
 	private Scene scene;
 
+	/** The save menu. */
 	@FXML
-	private Menu fileMenu;
+	private MenuItem saveMenu;
 
 	/** The parent. */
 	@FXML
 	private Pane pane;
+
+	/** The controller. */
+	private IPomodarmorController controller = null;
 
 	/**
 	 * Instantiates a new pomodarmor view.
@@ -34,6 +42,15 @@ public class PomodarmorView implements Initializable, IPomodarmorView {
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
+		saveMenu.setGraphic(ImageRegistry.getInstance()
+				.getImage(ImageRegistry.SAVE_ICON_KEY));
+		saveMenu.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						controller.save();
+					}
+				});
 	}
 
 	/*
@@ -52,8 +69,8 @@ public class PomodarmorView implements Initializable, IPomodarmorView {
 	 * @see bzh.gabitchov.pomodarmor.view.IView#getPane()
 	 */
 	@Override
-	public Pane getPane() {
-		return pane;
+	public <T extends Pane> T getPane(final Class<T> paneType) {
+		return paneType.isInstance(pane) ? paneType.cast(pane) : null;
 	}
 
 	/*
@@ -62,7 +79,9 @@ public class PomodarmorView implements Initializable, IPomodarmorView {
 	 * @see bzh.gabitchov.pomodarmor.view.IView#setController(java.lang.Object)
 	 */
 	@Override
-	public void setController(final Object controller) {
-
+	public void setController(final Object newController) {
+		if (newController instanceof IPomodarmorController) {
+			this.controller = (IPomodarmorController) newController;
+		}
 	}
 }

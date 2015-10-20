@@ -9,19 +9,24 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
+ * Controller for Task.
+ *
  * @author g.pascual
  *
  */
 public class TaskController extends Task implements ITaskController {
 
+	/** The closed property. */
 	private SimpleBooleanProperty closedProperty;
+
+	/** The label property. */
 	private SimpleStringProperty labelProperty;
 
 	/**
 	 * @param label
 	 */
-	public TaskController(final String label) {
-		super(label);
+	public TaskController() {
+		super("New Task");
 	}
 
 	/*
@@ -32,7 +37,8 @@ public class TaskController extends Task implements ITaskController {
 	@Override
 	public Property<String> labelProperty() {
 		if (null == labelProperty) {
-			labelProperty = new SimpleStringProperty(this, "label", getLabel()) {
+			labelProperty = new SimpleStringProperty(this, "label",
+					getLabel()) {
 				@Override
 				public void set(final String newValue) {
 					super.set(newValue);
@@ -49,7 +55,8 @@ public class TaskController extends Task implements ITaskController {
 	@Override
 	public Property<Boolean> closedProperty() {
 		if (null == closedProperty) {
-			closedProperty = new SimpleBooleanProperty(this, "closed", isClosed()) {
+			closedProperty = new SimpleBooleanProperty(this, "closed",
+					isClosed()) {
 				@Override
 				public void set(final boolean newValue) {
 					super.set(newValue);

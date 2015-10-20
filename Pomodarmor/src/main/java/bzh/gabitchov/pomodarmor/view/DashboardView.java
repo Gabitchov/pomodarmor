@@ -11,6 +11,8 @@ import bzh.gabitchov.pomodarmor.controller.IDashboardController;
 import bzh.gabitchov.pomodarmor.controller.ITaskController;
 import bzh.gabitchov.pomodarmor.controller.TaskController;
 import bzh.gabitchov.pomodarmor.utils.ImageRegistry;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableStringValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,10 +20,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 
 /**
@@ -42,11 +44,21 @@ public class DashboardView implements Initializable, IDashboardView {
 	@FXML
 	private Button removeTask;
 
+	/** The edit task. */
+	@FXML
+	private Button editTask;
+
 	/** The controller. */
 	private IDashboardController controller;
 
 	/** The parent. */
 	private final Pane parent = null;
+
+	/** The value factory. */
+	private PropertyValueFactory<ITask, String> valueFactory = null;
+
+	/** The label column. */
+	private TableColumn<ITask, String> labelColumn = null;
 
 	/**
 	 *
@@ -64,34 +76,67 @@ public class DashboardView implements Initializable, IDashboardView {
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
 		ImageRegistry imageRegistry = ImageRegistry.getInstance();
-		addTask.setGraphic(imageRegistry.getImage(ImageRegistry.ADD_TASK_ICON_KEY));
-		addTask.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent event) {
-				controller.addTask(new TaskController("Pipo"));
+		addTask.setGraphic(
+				imageRegistry.getImage(ImageRegistry.ADD_TASK_ICON_KEY));
+		addTask.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
 
-			}
-		});
+						controller.addTask(new TaskController());
 
-		removeTask.setGraphic(imageRegistry.getImage(ImageRegistry.REMOVE_TASK_ICON_KEY));
-		removeTask.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent event) {
-				ITaskController task = (ITaskController) tasksView.getSelectionModel().getSelectedItem();
-				controller.removeTask(task);
-			}
-		});
+					}
+				});
 
-		TableColumn<ITask, String> labelColumn = new TableColumn<ITask, String>("Label");
-		labelColumn.setId("dark-blue");
-		labelColumn.setCellValueFactory(new PropertyValueFactory<ITask, String>("label"));
-		labelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		removeTask.setGraphic(
+				imageRegistry.getImage(ImageRegistry.REMOVE_TASK_ICON_KEY));
+		removeTask.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						ITaskController task = (ITaskController) tasksView
+								.getSelectionModel().getSelectedItem();
 
-		TableColumn<ITask, Boolean> closedColumn = new TableColumn<ITask, Boolean>("Closed");
-		PropertyValueFactory<ITask, Boolean> value = new PropertyValueFactory<ITask, Boolean>("closed");
-		closedColumn.setId("dark-blue");
-		closedColumn.setCellValueFactory(value);
-		closedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(closedColumn));
+						controller.removeTask(task);
+
+					}
+				});
+
+		editTask.setGraphic(
+				imageRegistry.getImage(ImageRegistry.EDIT_TASK_ICON_KEY));
+		editTask.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
+						ITask task = tasksView.getSelectionModel()
+								.getSelectedItem();
+						ObservableValue<String> valueObs = valueFactory.call(
+								new CellDataFeatures<ITask, String>(tasksView,
+										labelColumn, task));
+						controller.editTask(task);
+
+						if (valueObs instanceof WritableStringValue) {
+							((WritableStringValue) valueObs)
+									.set(task.getLabel());
+						}
+
+					}
+
+				});
+
+		labelColumn = new TableColumn<ITask, String>("Label");
+
+		valueFactory = new PropertyValueFactory<ITask, String>("label");
+
+		labelColumn.setCellValueFactory(valueFactory);
+
+		TableColumn<ITask, Boolean> closedColumn = new TableColumn<ITask, Boolean>(
+				"Closed");
+
+		closedColumn.setCellValueFactory(
+				new PropertyValueFactory<ITask, Boolean>("closed"));
+		closedColumn
+				.setCellFactory(CheckBoxTableCell.forTableColumn(closedColumn));
 
 		tasksView.getColumns().setAll(labelColumn, closedColumn);
 
@@ -103,8 +148,8 @@ public class DashboardView implements Initializable, IDashboardView {
 	 * @see bzh.gabitchov.pomodarmor.view.IView#getPane()
 	 */
 	@Override
-	public Pane getPane() {
-		return parent;
+	public <T extends Pane> T getPane(final Class<T> paneType) {
+		return paneType.isInstance(parent) ? paneType.cast(parent) : null;
 	}
 
 	/*
@@ -113,9 +158,9 @@ public class DashboardView implements Initializable, IDashboardView {
 	 * @see bzh.gabitchov.pomodarmor.view.IView#setController(java.lang.Object)
 	 */
 	@Override
-	public void setController(final Object controller) {
-		if (controller instanceof IDashboardController) {
-			this.controller = (IDashboardController) controller;
+	public void setController(final Object newController) {
+		if (newController instanceof IDashboardController) {
+			this.controller = (IDashboardController) newController;
 		}
 
 	}

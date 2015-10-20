@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="bzh.gabitchov.pomodarmor.view.TaskView" fx:id="pane">
+	<buttonTypes>
+		<ButtonType text="Finish" buttonData="FINISH" fx:id="finishButton"/>
+		<ButtonType text="Cancel" buttonData="CANCEL_CLOSE"  />
+	</buttonTypes>
+	<content>
+		<HBox alignment="CENTER" spacing="5.0">
+			<children>
+				<Label text="Label:" />
+				<TextField fx:id="labelField"  />
+			</children>
+		</HBox>
+	</content>
+
+</DialogPane>
+

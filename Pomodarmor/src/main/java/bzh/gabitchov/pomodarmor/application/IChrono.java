@@ -33,6 +33,13 @@ public interface IChrono {
 	boolean isRunning();
 
 	/**
+	 * Checks if is stopped.
+	 *
+	 * @return true, if is stopped
+	 */
+	boolean isStopped();
+
+	/**
 	 * Gets the minute.
 	 *
 	 * @return the minute

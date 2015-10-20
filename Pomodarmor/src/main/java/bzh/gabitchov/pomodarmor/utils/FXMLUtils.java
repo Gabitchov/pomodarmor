@@ -18,13 +18,19 @@ import javafx.scene.Node;
  *
  * @author g.pascual
  */
-public class FXMLUtils {
+public final class FXMLUtils {
 
 	/** The Constant FXML_RESOURCES_PATH. */
 	private static final String FXML_RESOURCES_PATH = "fxml/";
 
 	/** The Constant log. */
-	private static final Logger log = LogManager.getLogger(FXMLUtils.class);
+	private static final Logger LOG = LogManager.getLogger(FXMLUtils.class);
+
+	/**
+	 * Instantiates a new FXML utils.
+	 */
+	private FXMLUtils() {
+	}
 
 	/**
 	 * Load view.
@@ -35,13 +41,16 @@ public class FXMLUtils {
 	 *            the file name
 	 * @return the FXML loader
 	 */
-	public static FXMLLoader loadView(final Class<? extends IView> controllerClass, final String fileName) {
-		URL location = controllerClass.getClassLoader().getResource(FXML_RESOURCES_PATH + fileName);
+	public static FXMLLoader loadView(
+			final Class<? extends IView> controllerClass,
+			final String fileName) {
+		URL location = controllerClass.getClassLoader()
+				.getResource(FXML_RESOURCES_PATH + fileName);
 		FXMLLoader loader = new FXMLLoader(location);
 		try {
 			loader.<Node> load();
 		} catch (final IOException e) {
-			log.error(e.getMessage());
+			LOG.error("JavaFX view is loaded with problem", e);
 		}
 		return loader;
 	}

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.gabitchov.pomodarmor.view.ChronoView">
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.gabitchov.pomodarmor.view.ChronoView" fx:id="pane">
 	<children>
 		<StackPane>
    <children>

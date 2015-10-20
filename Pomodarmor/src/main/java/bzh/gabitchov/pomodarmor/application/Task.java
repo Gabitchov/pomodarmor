@@ -6,20 +6,20 @@ package bzh.gabitchov.pomodarmor.application;
 public class Task implements ITask {
 
 	/** The closed. */
-	protected boolean closed = false;
+	private boolean closed = false;
 
 	/** The label. */
-	protected String label;
+	private String label;
 
 	/**
 	 * Instantiates a new task.
 	 *
-	 * @param label
+	 * @param newLabel
 	 *            the label
 	 */
-	public Task(final String label) {
+	public Task(final String newLabel) {
 		super();
-		this.label = label;
+		this.label = newLabel;
 	}
 
 	/*
@@ -58,8 +58,8 @@ public class Task implements ITask {
 	 * @see bzh.gabitchov.pomodarmor.application.ITask#setTask(java.lang.String)
 	 */
 	@Override
-	public void setLabel(final String label) {
-		this.label = label;
+	public void setLabel(final String newLabel) {
+		this.label = newLabel;
 
 	}
 

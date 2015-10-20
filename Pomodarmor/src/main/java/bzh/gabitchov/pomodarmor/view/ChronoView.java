@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 // TODO: Auto-generated Javadoc
@@ -43,7 +44,8 @@ public class ChronoView implements Initializable, IChronoView {
 	private IChronoController controller;
 
 	/** The pane. */
-	private Pane pane;
+	@FXML
+	private HBox pane;
 
 	/**
 	 * Instantiates a new chrono view.
@@ -74,33 +76,35 @@ public class ChronoView implements Initializable, IChronoView {
 		// Initialise start button
 		ImageRegistry instance = ImageRegistry.getInstance();
 		startButton.setGraphic(instance.getImage(ImageRegistry.START_ICON_KEY));
-		startButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent event) {
+		startButton.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent event) {
 
-				if (controller.isRunning() && controller.isStopped()) {
-					controller.restart();
-				} else {
-					controller.start();
+						if (controller.isRunning() && controller.isStopped()) {
+							controller.restart();
+						} else {
+							controller.start();
 
-				}
-			}
-		});
+						}
+					}
+				});
 
 		// Initialise stop button
 		stopButton.setGraphic(instance.getImage(ImageRegistry.STOP_ICON_KEY));
-		stopButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+		stopButton.addEventHandler(ActionEvent.ACTION,
+				new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(final ActionEvent event) {
-				if (controller.isStopped()) {
-					controller.stop();
-				} else {
-					controller.pause();
-				}
-			}
+					@Override
+					public void handle(final ActionEvent event) {
+						if (controller.isStopped()) {
+							controller.stop();
+						} else {
+							controller.pause();
+						}
+					}
 
-		});
+				});
 
 	}
 
@@ -128,14 +132,15 @@ public class ChronoView implements Initializable, IChronoView {
 	 *
 	 * @return the pane
 	 */
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see bzh.gabitchov.pomodarmor.view.IView#getPane()
 	 */
 	@Override
-	public Pane getPane() {
-		return pane;
+	public <T extends Pane> T getPane(final Class<T> paneType) {
+		return paneType.isInstance(pane) ? paneType.cast(pane) : null;
 	}
 
 	/**
@@ -149,8 +154,8 @@ public class ChronoView implements Initializable, IChronoView {
 	 *            the enable
 	 */
 	@Override
-	public void updateButton(final ChronoButton button, final String label, final ImageView icon,
-			final boolean enable) {
+	public void updateButton(final ChronoButton button, final String label,
+			final ImageView icon, final boolean enable) {
 		switch (button) {
 		case START:
 			startButton.setText(label);

@@ -5,17 +5,19 @@ package bzh.gabitchov.pomodarmor.application;
 
 import java.util.Observable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Chrono.
  */
 public class Chrono implements IChrono {
 
 	/** The default time. */
-	public static int DEFAULT_TIME = 25;
+	public static final int DEFAULT_TIME = 25;
 
 	/** The stopped. */
 	private boolean stopped = false;
 
+	/** The timer. */
 	private PomodarmorTimer timer;
 
 	/**
@@ -30,10 +32,16 @@ public class Chrono implements IChrono {
 	 *
 	 * @return true, if is stopped
 	 */
+	@Override
 	public boolean isStopped() {
 		return stopped;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see bzh.gabitchov.pomodarmor.application.IChrono#isRunning()
+	 */
 	@Override
 	public boolean isRunning() {
 		return null != timer;
@@ -68,6 +76,11 @@ public class Chrono implements IChrono {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see bzh.gabitchov.pomodarmor.application.IChrono#pause()
+	 */
 	@Override
 	public void pause() {
 		timer.setBlincker(null);
@@ -154,6 +167,11 @@ public class Chrono implements IChrono {
 			blincker = caller;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
 			int total = Chrono.DEFAULT_TIME * 60;
@@ -188,38 +206,72 @@ public class Chrono implements IChrono {
 
 		}
 
+		/**
+		 * Gets the minute.
+		 *
+		 * @return the minute
+		 */
 		public int getMinute() {
 			return minute;
 		}
 
+		/**
+		 * Gets the second.
+		 *
+		 * @return the second
+		 */
 		public int getSecond() {
 			return second;
 		}
 
 	}
 
+	/**
+	 * The Class TimerChange.
+	 */
 	public class TimerChange {
 
+		/** The change minute. */
 		private boolean changeMinute = false;
 
+		/** The change second. */
 		private boolean changeSecond = false;
 
+		/**
+		 * Instantiates a new timer change.
+		 */
 		public TimerChange() {
 			super();
 		}
 
+		/**
+		 * Sets the change minute.
+		 */
 		public void setChangeMinute() {
 			changeMinute = true;
 		}
 
+		/**
+		 * Sets the change second.
+		 */
 		public void setChangeSecond() {
 			changeSecond = true;
 		}
 
+		/**
+		 * Checks if is change minute.
+		 *
+		 * @return true, if is change minute
+		 */
 		public boolean isChangeMinute() {
 			return changeMinute;
 		}
 
+		/**
+		 * Checks if is change second.
+		 *
+		 * @return true, if is change second
+		 */
 		public boolean isChangeSecond() {
 			return changeSecond;
 		}

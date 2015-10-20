@@ -54,7 +54,7 @@ public class ChronoController extends Chrono implements IChronoController {
 		FXMLLoader loader = FXMLUtils.loadView(ChronoView.class, "Chrono.fxml");
 		Node node = loader.<Node> getRoot();
 
-		Pane parentNode = parent.getView().getPane();
+		Pane parentNode = parent.getView().getPane(Pane.class);
 		parentNode.getChildren().add(node);
 
 		view = loader.<IChronoView> getController();
